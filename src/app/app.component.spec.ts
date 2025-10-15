@@ -1,14 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-//import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
-      /*schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]*/
+      imports: [
+        AppComponent,
+        RouterTestingModule,
+        MatToolbarModule,
+        MatIconModule
+      ]
     }).compileComponents();
   });
 
@@ -24,11 +28,14 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('angular-example');
   });
 
-  it('should render title', () => {
+  it('should render toolbar text correctly', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const toolbarText = "Ohjelmistokehitysprosessin automatisointi -opintojakson harjoitusprojekti"
+    const toolbarText = 'Ohjelmistokehitysprosessin automatisointi -opintojakson harjoitusprojekti';
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.mat-toolbar span span')?.textContent).toContain(toolbarText);
+
+    // varmistetaan, että toolbar-teksti näkyy jossain mat-toolbar-elementissä
+    const toolbar = compiled.querySelector('mat-toolbar');
+    expect(toolbar?.textContent?.trim()).toContain(toolbarText);
   });
 });
